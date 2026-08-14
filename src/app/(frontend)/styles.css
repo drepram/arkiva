@@ -30,7 +30,7 @@ p { text-wrap: pretty; }
 
 .site-header { align-items: center; border-bottom: 1px solid var(--ink); display: flex; justify-content: space-between; min-height: 84px; padding: 0 var(--page); position: relative; z-index: 10; }
 .brand { align-items: center; display: flex; gap: 1.2rem; }
-.wordmark { font-size: 1.75rem; font-weight: 900; letter-spacing: -0.08em; line-height: 1; }
+.wordmark { font-family: Georgia, "Times New Roman", serif; font-size: 1.45rem; font-weight: 400; letter-spacing: -0.045em; line-height: 1; }
 .brand-note { border-left: 1px solid var(--line); color: var(--muted); font-size: 0.57rem; letter-spacing: 0.08em; line-height: 1.35; padding-left: 1.2rem; text-transform: uppercase; }
 .site-header nav { align-items: center; display: flex; gap: clamp(1.25rem, 3vw, 3.5rem); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .site-header nav a { padding: 0.75rem 0; position: relative; }
@@ -117,14 +117,17 @@ p { text-wrap: pretty; }
 .index-list span { color: var(--muted); font-size: 0.7rem; font-variant-numeric: tabular-nums; }
 .index-list strong { font-family: Georgia, serif; font-size: 1.8rem; font-weight: 400; overflow-wrap: anywhere; }
 .index-list small { color: var(--muted); line-height: 1.4; overflow-wrap: anywhere; }
-.site-footer { align-items: start; border-top: 1px solid var(--ink); display: grid; font-size: 0.63rem; gap: 3rem; grid-template-columns: 2fr 1fr 1fr 1.4fr; letter-spacing: 0.06em; padding: 2rem var(--page) 5rem; }
-.site-footer > div { display: flex; flex-direction: column; gap: 0.45rem; }
-.site-footer strong { font-size: 1.5rem; letter-spacing: -0.06em; }
-.site-footer div p { color: var(--muted); line-height: 1.45; margin: 0.8rem 0 0; max-width: 19rem; }
-.site-footer span { color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.5rem; text-transform: uppercase; }
+.site-footer { border-top: 1px solid var(--ink); padding: 2rem var(--page) 1.5rem; }
+.footer-wordmark { font-family: Georgia, "Times New Roman", serif; font-size: clamp(5rem, 14.5vw, 15rem); letter-spacing: -0.075em; line-height: 0.82; padding: clamp(2rem, 5vw, 5rem) 0 clamp(3rem, 6vw, 6rem); white-space: nowrap; }
+.footer-grid { display: grid; gap: clamp(2rem, 5vw, 6rem); grid-template-columns: repeat(3, minmax(8rem, 1fr)) minmax(15rem, 1.5fr); }
+.footer-grid section { align-items: flex-start; display: flex; flex-direction: column; gap: 0.55rem; }
+.footer-grid h2 { font-family: Georgia, "Times New Roman", serif; font-size: 1rem; font-weight: 600; margin: 0 0 1rem; }
+.footer-grid a, .footer-grid p { font-family: Georgia, "Times New Roman", serif; font-size: 0.95rem; line-height: 1.45; }
+.footer-grid p { margin: 0; max-width: 28rem; }
 .site-footer a { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 0.2rem; }
 .site-footer a:hover { text-decoration-color: var(--oxide); }
-.footer-note { color: var(--muted); line-height: 1.5; margin: 0; text-align: right; }
+.footer-credit { font-family: Georgia, "Times New Roman", serif; font-size: 0.9rem; margin: clamp(3rem, 6vw, 6rem) 0 0; text-align: center; }
+.footer-credit a { text-decoration-color: currentColor; }
 
 .article-page, .series-page, .contribute-page { padding: clamp(3rem, 6vw, 6rem) var(--page) 10rem; }
 .article-page > header, .series-page > header, .contribute-page > header { margin-left: 25%; max-width: 70rem; }
@@ -164,6 +167,7 @@ p { text-wrap: pretty; }
   .object-record { border-top: 1px solid var(--ink); padding-left: 0; position: static; }
   .text-page h1, .index-page h1, .text-page > p:last-child, .text-page > .prose, .index-list { margin-left: 0; }
   .article-page > header, .series-page > header, .contribute-page > header, .series-page > .prose, .contribute-list { margin-left: 0; }
+  .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 560px) {
@@ -182,9 +186,8 @@ p { text-wrap: pretty; }
   .empty-state { padding-left: var(--page); }
   .index-list a { grid-template-columns: 2rem 1fr; }
   .index-list small { grid-column: 2; }
-  .site-footer { gap: 2rem; grid-template-columns: 1fr 1fr; }
-  .site-footer > div:first-child, .footer-note { grid-column: 1 / -1; }
-  .footer-note { text-align: left; }
+  .footer-wordmark { font-size: 18vw; white-space: normal; }
+  .footer-grid { grid-template-columns: 1fr; }
   .article-cover, .series-page > figure { margin-left: calc(var(--page) * -1); margin-right: calc(var(--page) * -1); padding: 1.5rem var(--page); }
   .contribute-list a { grid-template-columns: 2rem 1fr; }
   .contribute-list small { grid-column: 2; }
