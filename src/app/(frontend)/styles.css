@@ -29,17 +29,16 @@ p { text-wrap: pretty; }
 #main-content:focus { outline: none; }
 
 .site-header { align-items: center; border-bottom: 1px solid var(--ink); display: flex; justify-content: space-between; min-height: 84px; padding: 0 var(--page); position: relative; z-index: 10; }
-.brand { align-items: center; display: flex; gap: 1.2rem; }
+.brand { align-items: center; display: flex; }
 .wordmark { font-family: Georgia, "Times New Roman", serif; font-size: 1.45rem; font-weight: 400; letter-spacing: -0.045em; line-height: 1; }
-.brand-note { border-left: 1px solid var(--line); color: var(--muted); font-size: 0.57rem; letter-spacing: 0.08em; line-height: 1.35; padding-left: 1.2rem; text-transform: uppercase; }
 .site-header nav { align-items: center; display: flex; gap: clamp(1.25rem, 3vw, 3.5rem); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .site-header nav a { padding: 0.75rem 0; position: relative; }
 .site-header nav a::after { background: var(--oxide); bottom: 0.35rem; content: ""; height: 2px; left: 0; position: absolute; transform: scaleX(0); transform-origin: left; transition: transform 180ms ease; width: 100%; }
 .site-header nav a:hover::after, .site-header nav a:focus-visible::after { transform: scaleX(1); }
 
 .archive-intro { align-items: end; border-bottom: 1px solid var(--ink); display: grid; gap: clamp(2rem, 5vw, 6rem); grid-template-columns: 1.3fr 1fr 1fr; padding: clamp(2.5rem, 5vw, 5rem) var(--page) 2.5rem; }
-.eyebrow, .section-number { font-size: 0.62rem; letter-spacing: 0.13em; margin: 0; text-transform: uppercase; }
-.archive-intro h1, .text-page h1, .index-page h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(3.5rem, 6vw, 6.5rem); font-weight: 400; letter-spacing: -0.065em; line-height: 0.88; margin: 1rem 0 0; }
+.eyebrow { font-size: 0.62rem; letter-spacing: 0.13em; margin: 0; text-transform: uppercase; }
+.archive-intro h1, .text-page h1, .index-page h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(3.5rem, 6vw, 6.5rem); font-weight: 400; letter-spacing: -0.065em; line-height: 0.88; margin: 0; }
 .archive-intro > p { font-family: Georgia, "Times New Roman", serif; font-size: clamp(1rem, 1.5vw, 1.35rem); line-height: 1.35; margin: 0; max-width: 32rem; }
 .archive-intro dl { margin: 0; }
 .archive-intro dl div { border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1.4fr; padding: 0.45rem 0; }
@@ -58,13 +57,9 @@ p { text-wrap: pretty; }
 .filters button { background: var(--oxide); border: 0; color: #fff; cursor: pointer; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; padding: 1rem 1.5rem; text-transform: uppercase; transition: background-color 160ms ease; }
 .filters button:hover { background: var(--oxide-hover); }
 
-.results-heading { align-items: flex-end; border-bottom: 1px solid var(--ink); display: flex; justify-content: space-between; padding: clamp(3.5rem, 7vw, 7rem) var(--page) 1.2rem; }
-.results-heading h2 { font-family: Georgia, serif; font-size: clamp(3.5rem, 6vw, 6.5rem); font-weight: 400; letter-spacing: -0.06em; line-height: 0.9; margin: 0.8rem 0 0; }
-.result-state { align-items: flex-end; display: flex; gap: 2rem; }
-.result-state p { color: var(--muted); font-size: 0.66rem; letter-spacing: 0.08em; margin: 0; text-transform: uppercase; }
-.result-state strong { color: var(--ink); font-family: Georgia, serif; font-size: 1.5rem; font-weight: 400; }
-.result-state a { border-bottom: 1px solid var(--ink); font-size: 0.62rem; letter-spacing: 0.08em; padding-bottom: 0.2rem; text-transform: uppercase; }
-.result-state a:hover { border-color: var(--oxide); color: var(--oxide); }
+.active-filters { align-items: center; border-bottom: 1px solid var(--ink); display: flex; font-size: 0.63rem; justify-content: flex-end; letter-spacing: 0.08em; gap: 1.5rem; padding: 0.8rem var(--page); text-transform: uppercase; }
+.active-filters a { text-decoration: underline; text-underline-offset: 0.2rem; }
+.active-filters a:hover { color: var(--oxide); }
 
 .archive-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 0 var(--page) 9rem; }
 .artefact-card { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); content-visibility: auto; contain-intrinsic-size: auto 620px; min-width: 0; padding: clamp(1rem, 1.6vw, 2rem) clamp(0.8rem, 1.4vw, 1.5rem) clamp(2.5rem, 4vw, 4.5rem); }
@@ -159,7 +154,6 @@ p { text-wrap: pretty; }
 }
 
 @media (max-width: 760px) {
-  .brand-note { display: none; }
   .archive-intro { align-items: start; grid-template-columns: 1fr 1fr; }
   .archive-intro > div { grid-column: 1 / -1; }
   .detail-layout { display: flex; flex-direction: column; }
@@ -179,8 +173,6 @@ p { text-wrap: pretty; }
   .filters { display: block; padding: 0; }
   .filters label { border-bottom: 1px solid var(--panel-line); }
   .filters button { width: 100%; }
-  .results-heading { align-items: flex-start; }
-  .result-state { align-items: flex-end; flex-direction: column; gap: 0.75rem; }
   .archive-grid { display: block; }
   .artefact-card { border-left: 0 !important; padding-left: 0; padding-right: 0; }
   .empty-state { padding-left: var(--page); }

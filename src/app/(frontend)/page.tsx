@@ -67,7 +67,6 @@ export default async function ArchivePage({ searchParams }: { searchParams: Sear
     <main>
       <section className="archive-intro">
         <div>
-          <p className="eyebrow">Independent Archive Initiative · Indonesia</p>
           <h1>Artefak Kita</h1>
         </div>
         <p>A curated digital archive exploring vintage Indonesian art, design & its political narratives.</p>
@@ -91,13 +90,7 @@ export default async function ArchivePage({ searchParams }: { searchParams: Sear
         <button type="submit">Search Archive</button>
       </form>
 
-      <section className="results-heading">
-        <div><p className="section-number">Collection Index</p><h2>Finds</h2></div>
-        <div className="result-state">
-          <p aria-live="polite"><strong>{resultCount}</strong> artefact{artefacts.totalDocs === 1 ? "" : "s"}</p>
-          {hasFilters ? <Link href="/">Clear Filters</Link> : null}
-        </div>
-      </section>
+      {hasFilters ? <div className="active-filters"><span aria-live="polite">{resultCount} result{artefacts.totalDocs === 1 ? "" : "s"}</span><Link href="/">Clear Filters</Link></div> : null}
 
       {artefacts.docs.length ? (
         <div className="archive-grid">
