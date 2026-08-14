@@ -9,6 +9,9 @@ type PayloadImage = {
 export const resolveImage = (value: unknown, size?: string): PayloadImage | null => {
   if (!value || typeof value !== "object") return null;
   const image = value as PayloadImage;
-  const sizedUrl = size ? image.sizes?.[size]?.url : undefined;
+  const candidate = size ? image.sizes?.[size]?.url : undefined;
+  const sizedUrl = candidate && !candidate.split("?")[0].endsWith("/null")
+    ? candidate
+    : undefined;
   return { ...image, url: sizedUrl || image.url };
 };

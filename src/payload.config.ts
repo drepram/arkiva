@@ -19,8 +19,11 @@ const plugins = env.disableR2 ? [] : [
     collections: {
       images: {
         prefix: env.mediaPrefix,
-        generateFileURL: ({ filename, prefix }) =>
-          `${env.mediaPublicUrl}/${prefix || env.mediaPrefix}/${filename}`,
+        generateFileURL: ({ filename, prefix }) => {
+          if (!filename) return "";
+          const objectPrefix = prefix || env.mediaPrefix;
+          return `${env.mediaPublicUrl}/${objectPrefix}/${encodeURIComponent(filename)}`;
+        },
       },
     },
     bucket: env.bucket,
