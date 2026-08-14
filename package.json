@@ -1,0 +1,44 @@
+{
+  "name": "arkiva",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "prebuild": "npm run generate:importmap && npm run generate:types",
+    "build": "next build",
+    "start": "next start",
+    "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:importmap",
+    "generate:types": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:types",
+    "migrate": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload migrate",
+    "migrate:create": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload migrate:create",
+    "import:artefacts": "tsx scripts/import-artefacts.ts",
+    "seed:artefakkita": "tsx scripts/seed-artefakkita.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@payloadcms/db-postgres": "3.17.1",
+    "@payloadcms/next": "3.17.1",
+    "@payloadcms/richtext-lexical": "3.17.1",
+    "@payloadcms/storage-s3": "3.17.1",
+    "@payloadcms/ui": "3.17.1",
+    "cross-env": "^7.0.3",
+    "csv-parse": "^5.6.0",
+    "dotenv": "^16.4.7",
+    "next": "15.5.16",
+    "payload": "3.17.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-markdown": "^10.1.0",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.12",
+    "@types/react": "19.0.10",
+    "@types/react-dom": "19.0.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "packageManager": "pnpm@9.15.4"
+}
