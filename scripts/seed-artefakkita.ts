@@ -123,7 +123,7 @@ async function run() {
     const imageId = primaryEntry?.[1] || imageByBase.get(baseUrl(page.images[0] || ""));
     if (!imageId) throw new Error(`No local image for ${page.url}`);
 
-    const data = { title, slug, displayDate, yearStart, yearEnd, type: typeId, creators: creatorIds, creatorRole, source: sourceId, holdingCollection: valueAfter(page.content, "Collection"), objectDetail: valueAfter(page.content, "Object Detail"), summary: clean(page.description), description: page.description ? richText(page.description) : undefined, images: [{ image: imageId }], legacy: { id: String(index + 1).padStart(3, "0"), url: page.url }, _status: "published" as const };
+    const data = { title, slug, displayDate, yearStart, yearEnd, type: typeId, creators: creatorIds, creatorRole, source: sourceId, holdingCollection: valueAfter(page.content, "Collection"), objectDetail: valueAfter(page.content, "Object Detail"), summary: clean(page.description), description: page.description ? richText(page.description) : undefined, images: [{ image: imageId }], sortOrder: index + 1, legacy: { id: String(index + 1).padStart(3, "0"), url: page.url }, _status: "published" as const };
     const existing = await payload.find({ collection: "artefacts", where: { slug: { equals: slug } }, limit: 1 });
     if (existing.docs[0]) await payload.update({ collection: "artefacts", id: existing.docs[0].id, data });
     else await payload.create({ collection: "artefacts", data });

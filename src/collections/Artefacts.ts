@@ -55,6 +55,16 @@ export const Artefacts: CollectionConfig = {
       ],
     },
     { name: "tags", type: "text", hasMany: true },
+    {
+      name: "sortOrder",
+      type: "number",
+      defaultValue: 0,
+      index: true,
+      admin: {
+        position: "sidebar",
+        description: "0 keeps new additions ahead of the imported collection order.",
+      },
+    },
     { name: "featured", type: "checkbox", defaultValue: false, admin: { position: "sidebar" } },
     {
       name: "legacy",

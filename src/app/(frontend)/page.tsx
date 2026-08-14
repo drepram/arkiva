@@ -22,8 +22,16 @@ export default async function ArchivePage({ searchParams }: { searchParams: Sear
   const creator = one(params.creator);
   const series = one(params.series);
   const decade = one(params.decade);
+  const sort = one(params.sort) || "relevant";
   const currentPage = Math.max(1, Number.parseInt(one(params.page), 10) || 1);
-  const hasFilters = Boolean(q || type || creator || series || decade);
+  const hasFilters = Boolean(q || type || creator || series || decade || sort !== "relevant");
+  const sortValue = {
+    relevant: ["sortOrder", "-createdAt"],
+    newest: ["-createdAt"],
+    earliest: ["yearStart", "title"],
+    latest: ["-yearStart", "title"],
+    title: ["title"],
+  }[sort] || ["sortOrder", "-createdAt"];
   const and: Where[] = [];
 
   if (q) and.push({ or: [
@@ -39,7 +47,7 @@ export default async function ArchivePage({ searchParams }: { searchParams: Sear
 
   const payload = await getPayloadClient();
   const [artefacts, types, creators, allSeries, decadeRecords] = await Promise.all([
-    payload.find({ collection: "artefacts", where: and.length ? { and } : undefined, depth: 2, limit: 48, page: currentPage, sort: "-createdAt" }),
+    payload.find({ collection: "artefacts", where: and.length ? { and } : undefined, depth: 2, limit: 48, page: currentPage, sort: sortValue }),
     payload.find({ collection: "artefact-types", pagination: false, sort: "name" }),
     payload.find({ collection: "creators", pagination: false, sort: "name" }),
     payload.find({ collection: "series", pagination: false, sort: "title" }),
@@ -49,7 +57,7 @@ export default async function ArchivePage({ searchParams }: { searchParams: Sear
   const resultCount = new Intl.NumberFormat("en").format(artefacts.totalDocs);
   const pageHref = (page: number) => {
     const query = new URLSearchParams();
-    Object.entries({ q, type, creator, series, decade }).forEach(([key, value]) => { if (value) query.set(key, value); });
+    Object.entries({ q, type, creator, series, decade, sort: sort === "relevant" ? "" : sort }).forEach(([key, value]) => { if (value) query.set(key, value); });
     if (page > 1) query.set("page", String(page));
     const value = query.toString();
     return value ? `/?${value}` : "/";
@@ -71,6 +79,7 @@ export default async function ArchivePage({ searchParams }: { searchParams: Sear
       </section>
 
       <form className="filters" action="/">
+        <label><span>Sort</span><select name="sort" defaultValue={sort}><option value="relevant">Most Relevant</option><option value="newest">Recently Added</option><option value="earliest">Earliest Date</option><option value="latest">Latest Date</option><option value="title">Title A–Z</option></select></label>
         <label className="search-field">
           <span>Search the archive</span>
           <input type="search" name="q" defaultValue={q} placeholder="Title, year, subject…" autoComplete="off" />

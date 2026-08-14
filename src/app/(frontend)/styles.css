@@ -46,7 +46,7 @@ p { text-wrap: pretty; }
 .archive-intro dt { color: var(--muted); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .archive-intro dd { font-size: 0.72rem; margin: 0; }
 
-.filters { align-items: stretch; background: var(--panel); color: var(--paper); display: grid; gap: 1px; grid-template-columns: minmax(15rem, 2.1fr) repeat(4, minmax(8rem, 1fr)) minmax(9rem, auto); padding: 1px; }
+.filters { align-items: stretch; background: var(--panel); color: var(--paper); display: grid; gap: 1px; grid-template-columns: minmax(9rem, 0.8fr) minmax(14rem, 1.8fr) repeat(4, minmax(8rem, 1fr)) minmax(9rem, auto); padding: 1px; }
 .filters label { background: var(--panel); display: grid; gap: 0.75rem; min-width: 0; padding: 1rem 1.2rem; }
 .filters label span { color: var(--panel-muted); font-size: 0.57rem; letter-spacing: 0.13em; text-transform: uppercase; }
 .filters input, .filters select { appearance: none; background-color: var(--panel); border: 0; border-bottom: 1px solid var(--panel-line); border-radius: 0; color: #f8f5ec; min-width: 0; outline: 0; padding: 0.25rem 0 0.55rem; width: 100%; }
@@ -69,8 +69,8 @@ p { text-wrap: pretty; }
 .archive-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 0 var(--page) 9rem; }
 .artefact-card { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); content-visibility: auto; contain-intrinsic-size: auto 620px; min-width: 0; padding: clamp(1rem, 1.6vw, 2rem) clamp(0.8rem, 1.4vw, 1.5rem) clamp(2.5rem, 4vw, 4.5rem); }
 .artefact-card:nth-child(4n + 1) { border-left: 1px solid var(--line); }
-.image-frame { align-items: center; background: var(--paper-deep); display: flex; justify-content: center; min-height: 14rem; overflow: hidden; padding: clamp(0.7rem, 1.2vw, 1.3rem); position: relative; }
-.image-frame img { height: auto; max-height: 34rem; object-fit: contain; transition: transform 420ms cubic-bezier(.2,.7,.2,1); width: 100%; }
+.image-frame { align-items: center; aspect-ratio: 1 / 1; background: var(--paper-deep); display: flex; justify-content: center; overflow: hidden; padding: clamp(1.2rem, 2.3vw, 2.8rem); position: relative; }
+.image-frame img { height: 100%; object-fit: contain; transition: transform 420ms cubic-bezier(.2,.7,.2,1); width: 100%; }
 .card-number { background: var(--paper); font-variant-numeric: tabular-nums; font-size: 0.56rem; left: 0; letter-spacing: 0.08em; padding: 0.35rem 0.45rem; position: absolute; top: 0; z-index: 1; }
 .image-missing { color: var(--muted); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .artefact-card a:hover .image-frame img { transform: scale(1.025); }

@@ -260,6 +260,10 @@ export interface Artefact {
     id?: string | null;
   }[];
   tags?: string[] | null;
+  /**
+   * 0 keeps new additions ahead of the imported collection order.
+   */
+  sortOrder?: number | null;
   featured?: boolean | null;
   legacy?: {
     id?: string | null;
@@ -512,6 +516,7 @@ export interface ArtefactsSelect<T extends boolean = true> {
         id?: T;
       };
   tags?: T;
+  sortOrder?: T;
   featured?: T;
   legacy?:
     | T
