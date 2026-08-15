@@ -136,12 +136,18 @@ p { text-wrap: pretty; }
 .about-hero > p { font-size: clamp(1.55rem, 2.3vw, 2.65rem); line-height: 1.17; margin: clamp(8rem, 12vw, 14rem) auto 0; max-width: 49rem; text-align: center; }
 .about-mission { font-size: clamp(1.1rem, 1.5vw, 1.55rem); line-height: 1.25; margin: clamp(8rem, 12vw, 13rem) auto 0; max-width: 49rem; padding: 0 var(--page); text-align: center; }
 .about-sections { margin: clamp(4rem, 7vw, 7rem) auto 0; max-width: 49rem; padding: 0 var(--page); }
-.about-section { border-top: 1px solid var(--line); padding: 0 0 clamp(3.5rem, 6vw, 6rem); }
-.about-section h2 { align-items: center; display: flex; font-size: clamp(1.2rem, 1.5vw, 1.55rem); font-weight: 400; justify-content: space-between; margin: 0; padding: 1rem 0 clamp(2.5rem, 4vw, 4rem); }
-.about-section h2 span:last-child { font-family: Arial, Helvetica, sans-serif; font-size: 1.7rem; font-weight: 400; line-height: 1; }
+.about-section { border-top: 1px solid var(--line); }
+.about-section:last-child { border-bottom: 1px solid var(--line); }
+.about-section summary { align-items: center; cursor: pointer; display: flex; font-size: clamp(1.2rem, 1.5vw, 1.55rem); font-weight: 400; justify-content: space-between; list-style: none; padding: clamp(1.5rem, 3vw, 2.5rem) 0; }
+.about-section summary::-webkit-details-marker { display: none; }
+.about-section summary:hover > span:first-child { color: var(--oxide); }
+.about-section summary:focus-visible { outline: 3px solid var(--oxide); outline-offset: 0.35rem; }
+.about-toggle { font-family: Arial, Helvetica, sans-serif; font-size: 2rem; font-weight: 400; line-height: 1; transition: transform 180ms ease; }
+.about-section[open] .about-toggle { transform: rotate(45deg); }
 .about-section-body { font-family: Arial, Helvetica, sans-serif; font-size: 1.05rem; line-height: 1.45; }
 .about-section-body p { margin: 0 0 1.7rem; }
 .about-section-body p:last-child { margin-bottom: 0; }
+.about-section[open] .about-section-body { padding: clamp(1rem, 2vw, 2rem) 0 clamp(3.5rem, 6vw, 6rem); }
 .about-section-body a { text-decoration: underline; text-underline-offset: 0.18em; }
 .about-section-body a:hover { color: var(--oxide); }
 .about-collage { margin: 0 var(--page); overflow: hidden; }
@@ -213,7 +219,7 @@ p { text-wrap: pretty; }
   .about-hero > p { font-size: 1.45rem; margin-top: 6rem; }
   .about-mission { margin-top: 7rem; }
   .about-sections { margin-top: 4rem; }
-  .about-section h2 { padding-bottom: 2.5rem; }
+  .about-section summary { padding: 1.75rem 0; }
   .about-section-body { font-size: 1rem; }
   .about-collage { margin: 0; }
   .artefact-card { border-left: 0 !important; padding-left: 0; padding-right: 0; }
