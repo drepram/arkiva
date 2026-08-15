@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Header } from "@/components/Header";
+import { env } from "@/lib/env";
 import "./styles.css";
 
 export const metadata: Metadata = {
@@ -8,11 +9,17 @@ export const metadata: Metadata = {
   description: "An independent archive of Indonesia's visual history.",
 };
 
-export const viewport: Viewport = { themeColor: "#f3f0e7" };
+export const viewport: Viewport = { themeColor: "#ffffff" };
 
 export default function FrontendLayout({ children }: { children: ReactNode }) {
+  const mediaOrigin = env.mediaPublicUrl ? new URL(env.mediaPublicUrl).origin : "";
+
   return (
     <html lang="en" data-scroll-behavior="smooth">
+      <head>
+        <link rel="preload" href="/fonts/eczar-latin-400.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        {mediaOrigin ? <link rel="preconnect" href={mediaOrigin} crossOrigin="anonymous" /> : null}
+      </head>
       <body>
         <Header />
         <div id="main-content" tabIndex={-1}>{children}</div>

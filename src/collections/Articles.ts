@@ -28,6 +28,10 @@ export const Articles: CollectionConfig = {
     { name: "publishedAt", type: "date", admin: { position: "sidebar" } },
   ],
   hooks: {
-    afterChange: [({ doc }) => revalidate("/articles", `/articles/${doc.slug}`)],
+    afterChange: [({ doc, previousDoc }) => {
+      revalidate("/articles", `/articles/${doc.slug}`);
+      if (previousDoc?.slug && previousDoc.slug !== doc.slug) revalidate(`/articles/${previousDoc.slug}`);
+    }],
+    afterDelete: [({ doc }) => revalidate("/articles", `/articles/${doc.slug}`)],
   },
 };

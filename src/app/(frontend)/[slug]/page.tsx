@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { resolveImage } from "@/lib/media";
-import { getArtefactBySlug } from "@/lib/payload";
+import { getArtefactBySlug, getPayloadClient } from "@/lib/payload";
 
 type Params = Promise<{ slug: string }>;
 
@@ -9,7 +9,13 @@ const nameOf = (value: unknown, field = "name") => value && typeof value === "ob
   ? String((value as Record<string, unknown>)[field] || "")
   : "";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  const payload = await getPayloadClient();
+  const result = await payload.find({ collection: "artefacts", pagination: false, depth: 0, select: { slug: true } });
+  return result.docs.map(({ slug }) => ({ slug }));
+}
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug: encodedSlug } = await params;
@@ -37,7 +43,7 @@ export default async function ArtefactPage({ params }: { params: Params }) {
           {artefact.images?.map((entry, index) => {
             const image = resolveImage(entry.image, "detail");
             if (!image?.url) return null;
-            return <figure key={entry.id || index}><img src={image.url} alt={artefact.title} width={image.width || 1800} height={image.height || 2200} loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} />{entry.caption ? <figcaption>{entry.caption}</figcaption> : null}</figure>;
+            return <figure key={entry.id || index}><img src={image.url} alt={artefact.title} width={image.width || 1800} height={image.height || 2200} loading={index === 0 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} decoding="async" />{entry.caption ? <figcaption>{entry.caption}</figcaption> : null}</figure>;
           })}
         </div>
         <aside className="object-record">

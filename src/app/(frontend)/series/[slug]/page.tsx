@@ -4,7 +4,13 @@ import { RichText } from "@/components/RichText";
 import { resolveImage } from "@/lib/media";
 import { getPayloadClient } from "@/lib/payload";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
+
+export async function generateStaticParams() {
+  const payload = await getPayloadClient();
+  const result = await payload.find({ collection: "series", pagination: false, depth: 0, select: { slug: true } });
+  return result.docs.map(({ slug }) => ({ slug }));
+}
 
 export default async function SeriesDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

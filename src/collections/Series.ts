@@ -25,6 +25,10 @@ export const Series: CollectionConfig = {
     { name: "sourceUrl", type: "text", admin: { position: "sidebar" } },
   ],
   hooks: {
-    afterChange: [({ doc }) => revalidate("/series", `/series/${doc.slug}`)],
+    afterChange: [({ doc, previousDoc }) => {
+      revalidate("/series", `/series/${doc.slug}`);
+      if (previousDoc?.slug && previousDoc.slug !== doc.slug) revalidate(`/series/${previousDoc.slug}`);
+    }],
+    afterDelete: [({ doc }) => revalidate("/series", `/series/${doc.slug}`)],
   },
 };

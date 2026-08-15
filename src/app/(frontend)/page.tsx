@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Where } from "payload";
-import { getPayloadClient } from "@/lib/payload";
+import { getArchiveFacets, getPayloadClient } from "@/lib/payload";
 import { resolveImage } from "@/lib/media";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -46,14 +46,18 @@ export default async function ArchivePage({ searchParams }: { searchParams: Sear
   if (decade) and.push({ decade: { equals: Number(decade) } });
 
   const payload = await getPayloadClient();
-  const [artefacts, types, creators, allSeries, decadeRecords] = await Promise.all([
-    payload.find({ collection: "artefacts", where: and.length ? { and } : undefined, depth: 2, limit: 48, page: currentPage, sort: sortValue }),
-    payload.find({ collection: "artefact-types", pagination: false, sort: "name" }),
-    payload.find({ collection: "creators", pagination: false, sort: "name" }),
-    payload.find({ collection: "series", pagination: false, sort: "title" }),
-    payload.find({ collection: "artefacts", pagination: false, depth: 0, select: { decade: true } }),
+  const [artefacts, facets] = await Promise.all([
+    payload.find({
+      collection: "artefacts",
+      where: and.length ? { and } : undefined,
+      depth: 1,
+      limit: 48,
+      page: currentPage,
+      sort: sortValue,
+      select: { title: true, slug: true, displayDate: true, type: true, creators: true, images: true },
+    }),
+    getArchiveFacets(),
   ]);
-  const decades = [...new Set(decadeRecords.docs.map((item) => item.decade).filter(Boolean))].sort((a, b) => Number(b) - Number(a));
   const resultCount = new Intl.NumberFormat("en").format(artefacts.totalDocs);
   const pageHref = (page: number) => {
     const query = new URLSearchParams();
@@ -83,10 +87,10 @@ export default async function ArchivePage({ searchParams }: { searchParams: Sear
           <span>Search the archive</span>
           <input type="search" name="q" defaultValue={q} placeholder="Title, year, subject…" autoComplete="off" />
         </label>
-        <label><span>Decade</span><select name="decade" defaultValue={decade}><option value="">All decades</option>{decades.map((value) => <option key={value} value={String(value)}>{value}s</option>)}</select></label>
-        <label><span>Type</span><select name="type" defaultValue={type}><option value="">All types</option>{types.docs.map((item) => <option key={item.id} value={item.slug}>{item.name}</option>)}</select></label>
-        <label><span>Creator</span><select name="creator" defaultValue={creator}><option value="">All creators</option>{creators.docs.map((item) => <option key={item.id} value={item.slug}>{item.name}</option>)}</select></label>
-        <label><span>Series</span><select name="series" defaultValue={series}><option value="">All series</option>{allSeries.docs.map((item) => <option key={item.id} value={item.slug}>{item.title}</option>)}</select></label>
+        <label><span>Decade</span><select name="decade" defaultValue={decade}><option value="">All decades</option>{facets.decades.map((value) => <option key={value} value={String(value)}>{value}s</option>)}</select></label>
+        <label><span>Type</span><select name="type" defaultValue={type}><option value="">All types</option>{facets.types.map((item) => <option key={item.id} value={item.slug}>{item.name}</option>)}</select></label>
+        <label><span>Creator</span><select name="creator" defaultValue={creator}><option value="">All creators</option>{facets.creators.map((item) => <option key={item.id} value={item.slug}>{item.name}</option>)}</select></label>
+        <label><span>Series</span><select name="series" defaultValue={series}><option value="">All series</option>{facets.series.map((item) => <option key={item.id} value={item.slug}>{item.title}</option>)}</select></label>
         <button type="submit">Search Archive</button>
       </form>
 
@@ -102,7 +106,7 @@ export default async function ArchivePage({ searchParams }: { searchParams: Sear
                 <Link href={`/${artefact.slug}`}>
                   <div className="image-frame">
                     <span className="card-number" aria-hidden="true">{String((currentPage - 1) * 48 + index + 1).padStart(3, "0")}</span>
-                    {image?.url ? <img src={image.url} alt={artefact.title} width={image.width || 640} height={image.height || 800} loading="lazy" /> : <span className="image-missing">Image Pending</span>}
+                    {image?.url ? <img src={image.url} alt={artefact.title} width={image.width || 640} height={image.height || 800} loading="lazy" decoding="async" /> : <span className="image-missing">Image Pending</span>}
                   </div>
                   <div className="card-meta">
                     <p><span>{relationName(artefact.type)}</span><span>{artefact.displayDate}</span></p>
